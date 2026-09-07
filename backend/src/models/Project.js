@@ -20,10 +20,10 @@ const projectSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-    category: {
+    section: {
       type: String,
       required: true,
-      enum: ['software', 'blockchain', 'cnc'],
+      enum: ['full-stack', 'blockchain', 'systems', 'hardware', 'creative'],
     },
     summary: {
       type: String,
@@ -61,8 +61,12 @@ const projectSchema = new mongoose.Schema(
   }
 );
 
-projectSchema.index({ category: 1, status: 1 });
+projectSchema.index({ section: 1, status: 1 });
 projectSchema.index({ featured: 1, status: 1 });
+// Matches the public listing's exact filter+sort shape (6.4): status
+// equality first, then the sort fields in the same order/direction as the
+// query — featured first, then order, then publishedAt as the tiebreaker.
+projectSchema.index({ status: 1, featured: -1, order: 1, publishedAt: -1 });
 
 projectSchema.pre('validate', function () {
   if (this.isModified('title') && !this.slug) {

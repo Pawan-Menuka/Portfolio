@@ -27,3 +27,22 @@ const upload = multer({
 
 export const uploadSingle = upload.single('file');
 export const uploadMultiple = upload.array('files', 10);
+
+const resumeUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === 'application/pdf') {
+      cb(null, true);
+    } else {
+      cb(new ApiError(400, 'Resume must be a PDF'));
+    }
+  },
+});
+
+// This only checks the declared mimetype. The actual bytes are verified
+// against the PDF signature once the buffer is available — see
+// profile.controller.js — since a client can send any Content-Type it likes.
+export const uploadResume = resumeUpload.single('file');

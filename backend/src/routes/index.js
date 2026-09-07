@@ -6,6 +6,9 @@ import messageRoutes from './message.routes.js';
 import mediaRoutes from './media.routes.js';
 import certificationRoutes from './certification.routes.js';
 import skillRoutes from './skill.routes.js';
+import adminRoutes from './admin.routes.js';
+import profileRoutes from './profile.routes.js';
+import { protect, adminOnly } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -16,5 +19,7 @@ router.use('/messages', messageRoutes);
 router.use('/media', mediaRoutes);
 router.use('/certifications', certificationRoutes);
 router.use('/skills', skillRoutes);
+router.use('/admin', protect, adminOnly, adminRoutes);
+router.use('/profile', profileRoutes);
 
 export default router;

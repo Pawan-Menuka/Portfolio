@@ -11,7 +11,7 @@ export async function create(data) {
 }
 
 export async function update(id, data) {
-  const skill = await Skill.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+  const skill = await Skill.findByIdAndUpdate(id, data, { returnDocument: 'after', runValidators: true });
   if (!skill) throw new ApiError(404, 'Skill not found');
   return skill;
 }

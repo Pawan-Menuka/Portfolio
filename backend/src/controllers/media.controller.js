@@ -20,8 +20,16 @@ export const uploadMedia = asyncHandler(async (req, res) => {
   });
 });
 
+// Path-param form. Kept for now (item 10) but scheduled for removal once
+// nothing references it — a Cloudinary publicId containing '/' is fragile as
+// a path segment. Prefer deleteMediaByQuery below.
 export const deleteMedia = asyncHandler(async (req, res) => {
   const publicId = decodeURIComponent(req.params.publicId);
   await mediaService.destroy(publicId);
+  res.json({ success: true, message: 'Media deleted from Cloudinary' });
+});
+
+export const deleteMediaByQuery = asyncHandler(async (req, res) => {
+  await mediaService.destroy(req.query.publicId);
   res.json({ success: true, message: 'Media deleted from Cloudinary' });
 });

@@ -25,7 +25,7 @@ export async function markRead(id) {
   const message = await Message.findByIdAndUpdate(
     id,
     { read: true },
-    { new: true }
+    { returnDocument: 'after' }
   );
   if (!message) throw new ApiError(404, 'Message not found');
   return message;
