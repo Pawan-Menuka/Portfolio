@@ -13,7 +13,7 @@ export async function create(data) {
 }
 
 export async function update(id, data) {
-  const cert = await Certification.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+  const cert = await Certification.findByIdAndUpdate(id, data, { returnDocument: 'after', runValidators: true });
   if (!cert) throw new ApiError(404, 'Certification not found');
   return cert;
 }

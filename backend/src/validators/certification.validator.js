@@ -13,4 +13,12 @@ export const createCertificationSchema = z.object({
   order: z.number().optional().default(0),
 });
 
-export const updateCertificationSchema = createCertificationSchema.partial();
+// See project.validator.js for why the defaulted fields need re-declaring
+// here — `.partial()` alone would still reset them to their create-time
+// defaults whenever a PATCH omits them.
+export const updateCertificationSchema = createCertificationSchema.partial().extend({
+  category: z.enum(['software', 'blockchain', 'engineering', 'other']).optional(),
+  credentialId: z.string().optional(),
+  featured: z.boolean().optional(),
+  order: z.number().optional(),
+});
