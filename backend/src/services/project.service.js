@@ -2,19 +2,16 @@ import { Project } from '../models/Project.js';
 import { ApiError } from '../utils/ApiError.js';
 import * as mediaService from './media.service.js';
 
-export async function getAll({ category, status, featured, page = 1, limit = 12 } = {}) {
-  const query = {};
+export async function getAll({ section, featured, page = 1, limit = 12 } = {}) {
+  const query = { status: 'published' };
 
-  if (category) query.category = category;
-  if (status) query.status = status;
+  if (section) query.section = section;
   if (featured !== undefined) query.featured = featured === 'true';
-
-  if (!query.status) query.status = 'published';
 
   const skip = (page - 1) * limit;
   const [data, total] = await Promise.all([
     Project.find(query)
-      .sort({ order: 1, publishedAt: -1 })
+      .sort({ featured: -1, order: 1, publishedAt: -1 })
       .skip(skip)
       .limit(Number(limit))
       .lean(),
@@ -27,9 +24,9 @@ export async function getAll({ category, status, featured, page = 1, limit = 12 
   };
 }
 
-export async function getAllAdmin({ category, status, page = 1, limit = 20 } = {}) {
+export async function getAllAdmin({ section, status, page = 1, limit = 20 } = {}) {
   const query = {};
-  if (category) query.category = category;
+  if (section) query.section = section;
   if (status) query.status = status;
 
   const skip = (page - 1) * limit;
@@ -47,18 +44,26 @@ export async function getBySlug(slug) {
   return project;
 }
 
+export async function getByIdAdmin(id) {
+  const project = await Project.findById(id).lean();
+  if (!project) throw new ApiError(404, 'Project not found');
+  return project;
+}
+
 export async function create(data) {
   const project = await Project.create(data);
   return project;
 }
 
 export async function update(id, data) {
-  const project = await Project.findByIdAndUpdate(
-    id,
-    data,
-    { new: true, runValidators: true }
-  );
+  const project = await Project.findById(id);
   if (!project) throw new ApiError(404, 'Project not found');
+
+  // findByIdAndUpdate is query middleware only — it never fires the
+  // pre('save') hook that sets publishedAt on publish. Assign + save so
+  // create and update share the same document-hook path.
+  Object.assign(project, data);
+  await project.save();
   return project;
 }
 

@@ -10,4 +10,12 @@ export const createSkillSchema = z.object({
   order: z.number().optional().default(0),
 });
 
-export const updateSkillSchema = createSkillSchema.partial();
+// See project.validator.js for why the defaulted fields need re-declaring
+// here — `.partial()` alone would still reset them to their create-time
+// defaults whenever a PATCH omits them.
+export const updateSkillSchema = createSkillSchema.partial().extend({
+  icon: z.string().optional(),
+  yearsOfExperience: z.number().optional(),
+  description: z.string().optional(),
+  order: z.number().optional(),
+});

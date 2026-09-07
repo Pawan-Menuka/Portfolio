@@ -10,4 +10,10 @@ export const createPostSchema = z.object({
   status: z.enum(['draft', 'published']).optional().default('draft'),
 });
 
-export const updatePostSchema = createPostSchema.partial();
+// See project.validator.js for why the defaulted fields need re-declaring
+// here — `.partial()` alone would still reset `tags`/`status` to their
+// create-time defaults whenever a PATCH omits them.
+export const updatePostSchema = createPostSchema.partial().extend({
+  tags: z.array(z.string()).optional(),
+  status: z.enum(['draft', 'published']).optional(),
+});

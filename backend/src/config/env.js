@@ -4,7 +4,7 @@ const required = [
   'CLOUDINARY_CLOUD_NAME',
   'CLOUDINARY_API_KEY',
   'CLOUDINARY_API_SECRET',
-  'FRONTEND_URL',
+  'FRONTEND_ORIGINS',
 ];
 
 export function validateEnv() {
