@@ -1,0 +1,10 @@
+.connectivity-check {
+  max-width: 32rem;
+  margin: 4rem auto;
+  padding: 0 1.5rem;
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+.connectivity-check .error {
+  color: #d33;
+}
