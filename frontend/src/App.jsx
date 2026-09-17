@@ -1,55 +1,28 @@
-import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { getProfile, checkReady } from './lib/api';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ProfileProvider from './components/ProfileProvider.jsx';
+import Layout from './components/Layout.jsx';
+import { Home, NotFound } from './pages/PortfolioPages.jsx';
+import Projects from './pages/Projects.jsx';
+import ProjectDetail from './pages/ProjectDetail.jsx';
+import About from './pages/About.jsx';
+import CV from './pages/CV.jsx';
+import Contact from './pages/Contact.jsx';
 import './App.css';
+import './ocean-theme.css';
+import './features/iceberg/mobile-journey.css';
+import './styles/portfolio.css';
+import './styles/inner-pages-theme.css';
 
-// Temporary connectivity check only — not the real portfolio UI. Proves the
-// frontend can reach the locked backend (GET /ready and GET /profile) with
-// no CORS/network/parsing errors. Visual design intentionally minimal.
-function ConnectivityCheck() {
-  const [ready, setReady] = useState(null);
-  const [profile, setProfile] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    checkReady()
-      .then((res) => setReady(res.ok))
-      .catch(() => setReady(false));
-
-    getProfile()
-      .then((res) => setProfile(res.data))
-      .catch((err) => setError(err.message));
-  }, []);
-
-  return (
-    <main className="connectivity-check">
-      <h1>PORTFOLIO FRONTEND</h1>
-      <p>
-        Backend:{' '}
-        {ready === null ? 'Checking…' : ready ? 'Connected' : 'Unreachable'}
-      </p>
-
-      <h2>Profile</h2>
-      {error && <p className="error">Error: {error}</p>}
-      {!error && !profile && <p>Loading…</p>}
-      {profile && (
-        <ul>
-          <li>name: {profile.name || '(empty)'}</li>
-          <li>headline: {profile.headline || '(empty)'}</li>
-        </ul>
-      )}
-    </main>
-  );
-}
-
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<ConnectivityCheck />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-export default App;
+const router = createBrowserRouter([{
+  element: <ProfileProvider><Layout /></ProfileProvider>,
+  children: [
+    { index: true, element: <Home /> },
+    { path: 'projects', element: <Projects /> },
+    { path: 'projects/:slug', element: <ProjectDetail /> },
+    { path: 'about', element: <About /> },
+    { path: 'cv', element: <CV /> },
+    { path: 'contact', element: <Contact /> },
+    { path: '*', element: <NotFound /> },
+  ],
+}]);
+export default function App() { return <RouterProvider router={router} />; }

@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "6a162f1d19517c94aacda865",
+    "title": "CNC Steel Clamp",
+    "summary": "Precision 6-jaw clamp machined from 6061 aluminum",
+    "description": "Full description in **markdown**",
+    "tags": [
+      "aluminum",
+      "cnc",
+      "haas"
+    ],
+    "gallery": [],
+    "models3d": [],
+    "links": {
+      "github": "https://github.com/you/repo",
+      "live": "",
+      "demo": ""
+    },
+    "meta": {
+      "material": "Aluminum 6061",
+      "tolerance": "±0.01mm"
+    },
+    "featured": false,
+    "order": 0,
+    "status": "published",
+    "slug": "cnc-steel-clamp",
+    "createdAt": "2026-05-26T23:39:09.502Z",
+    "updatedAt": "2026-05-26T23:39:09.502Z",
+    "publishedAt": "2026-05-26T23:39:09.502Z",
+    "section": "hardware"
+  },
+  {
+    "_id": "6a162cbc19517c94aacda863",
+    "title": "CNC Aluminum Clamp",
+    "summary": "Precision 6-jaw clamp machined from 6061 aluminum",
+    "description": "Full description in **markdown**",
+    "tags": [
+      "aluminum",
+      "cnc",
+      "haas"
+    ],
+    "gallery": [],
+    "models3d": [],
+    "links": {
+      "github": "https://github.com/you/repo",
+      "live": "",
+      "demo": ""
+    },
+    "meta": {
+      "material": "Aluminum 6061",
+      "tolerance": "±0.01mm"
+    },
+    "featured": false,
+    "order": 0,
+    "status": "published",
+    "slug": "cnc-aluminum-clamp",
+    "createdAt": "2026-05-26T23:29:00.39Z",
+    "updatedAt": "2026-05-26T23:29:00.39Z",
+    "publishedAt": "2026-05-26T23:29:00.39Z",
+    "section": "hardware"
+  }
+]

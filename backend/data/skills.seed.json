@@ -1,0 +1,380 @@
+[
+  {
+    "name": "TypeScript",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Primary language across frontend, backend and shared schema packages.",
+    "order": 1
+  },
+  {
+    "name": "JavaScript",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 3,
+    "description": "Node.js services, tooling and browser work.",
+    "order": 2
+  },
+  {
+    "name": "React",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 3,
+    "description": "Component architecture, hooks and state management in production apps.",
+    "order": 3
+  },
+  {
+    "name": "Next.js",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "App Router, SSR/SSG/ISR, route handlers and server actions.",
+    "order": 4
+  },
+  {
+    "name": "Node.js",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "REST services, background workers and CLI tooling.",
+    "order": 5
+  },
+  {
+    "name": "Express",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "REST API design, middleware, error handling and validation layers.",
+    "order": 6
+  },
+  {
+    "name": "PostgreSQL",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Relational modelling, migrations, full-text search and cursor pagination.",
+    "order": 7
+  },
+  {
+    "name": "Prisma",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Schema modelling and migration workflows against PostgreSQL.",
+    "order": 8
+  },
+  {
+    "name": "MongoDB",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Document modelling, compound indexes and multi-document transactions.",
+    "order": 9
+  },
+  {
+    "name": "Mongoose",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Schema definition and query layers over MongoDB.",
+    "order": 10
+  },
+  {
+    "name": "SQL",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Query design, indexing and schema normalisation.",
+    "order": 11
+  },
+  {
+    "name": "Redis",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Distributed rate limiting, TTL-based locks and caching.",
+    "order": 12
+  },
+  {
+    "name": "REST API design",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Resource modelling, versioning, pagination and error contracts.",
+    "order": 13
+  },
+  {
+    "name": "JWT authentication",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Short-lived access tokens, refresh rotation and reuse detection.",
+    "order": 14
+  },
+  {
+    "name": "Role-based access control",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Permission modelling and route-level authorisation.",
+    "order": 15
+  },
+  {
+    "name": "Zod",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Runtime validation and shared client/server schema contracts.",
+    "order": 16
+  },
+  {
+    "name": "Tailwind CSS",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Utility-first styling and design-token driven UI.",
+    "order": 17
+  },
+  {
+    "name": "React Native (Expo)",
+    "category": "software",
+    "level": 2,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Cross-platform mobile application development.",
+    "order": 18
+  },
+  {
+    "name": "Docker",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Service containerisation and multi-service local environments.",
+    "order": 19
+  },
+  {
+    "name": "Kubernetes",
+    "category": "software",
+    "level": 2,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Deployment, service and config manifests for containerised services.",
+    "order": 20
+  },
+  {
+    "name": "GitHub Actions",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "CI pipelines for tests, static analysis and deployment.",
+    "order": 21
+  },
+  {
+    "name": "RabbitMQ",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Event-driven integration between services.",
+    "order": 22
+  },
+  {
+    "name": "BullMQ",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Background job queues, scheduled jobs and retries.",
+    "order": 23
+  },
+  {
+    "name": "Vitest",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Unit and regression test suites for TypeScript codebases.",
+    "order": 24
+  },
+  {
+    "name": "Jest",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Unit and integration testing for Node.js services.",
+    "order": 25
+  },
+  {
+    "name": "Git & GitHub",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 3,
+    "description": "Branching workflows, code review and release management.",
+    "order": 26
+  },
+  {
+    "name": "Cloudflare R2",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Object storage and CDN delivery for media assets.",
+    "order": 27
+  },
+  {
+    "name": "Vercel",
+    "category": "software",
+    "level": 4,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Production deployment, preview environments and edge configuration.",
+    "order": 28
+  },
+  {
+    "name": "Supabase",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Managed Postgres, auth and storage.",
+    "order": 29
+  },
+  {
+    "name": "Microservices",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Service decomposition, inter-service contracts and ownership boundaries.",
+    "order": 30
+  },
+  {
+    "name": "Event-driven architecture",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Message-based integration and asynchronous workflows.",
+    "order": 31
+  },
+  {
+    "name": "Concurrency control",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Distributed locks, transactions and race-condition-safe booking flows.",
+    "order": 32
+  },
+  {
+    "name": "OpenAPI / Swagger",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "API specification and generated documentation.",
+    "order": 33
+  },
+  {
+    "name": "Agile / Scrum",
+    "category": "software",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 2,
+    "description": "Sprint-based delivery, Jira tracking and team ceremonies.",
+    "order": 34
+  },
+  {
+    "name": "Solidity",
+    "category": "blockchain",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Milestone escrow contracts, state machines and pull-payment patterns.",
+    "order": 35
+  },
+  {
+    "name": "Foundry",
+    "category": "blockchain",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Fuzz testing and invariant test suites for smart contracts.",
+    "order": 36
+  },
+  {
+    "name": "Hardhat",
+    "category": "blockchain",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Contract compilation, deployment scripting and testnet verification.",
+    "order": 37
+  },
+  {
+    "name": "OpenZeppelin",
+    "category": "blockchain",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "ReentrancyGuard, Pausable and access-control building blocks.",
+    "order": 38
+  },
+  {
+    "name": "Chainlink",
+    "category": "blockchain",
+    "level": 2,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Price Feeds for USD pricing and Automation for time-locked release.",
+    "order": 39
+  },
+  {
+    "name": "wagmi / viem",
+    "category": "blockchain",
+    "level": 3,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Typed contract interaction from React clients.",
+    "order": 40
+  },
+  {
+    "name": "The Graph",
+    "category": "blockchain",
+    "level": 2,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Subgraph indexing of on-chain events.",
+    "order": 41
+  },
+  {
+    "name": "Slither",
+    "category": "blockchain",
+    "level": 2,
+    "icon": "",
+    "yearsOfExperience": 1,
+    "description": "Static analysis of Solidity contracts in CI.",
+    "order": 42
+  }
+]

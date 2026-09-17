@@ -5,7 +5,7 @@ export async function getAll({ category, featured } = {}) {
   const query = {};
   if (category) query.category = category;
   if (featured !== undefined) query.featured = featured === 'true';
-  return Certification.find(query).sort({ order: 1, issueDate: -1 }).lean();
+  return Certification.find(query).select('-__v').sort({ order: 1, issueDate: -1 }).lean();
 }
 
 export async function create(data) {

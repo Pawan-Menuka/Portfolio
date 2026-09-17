@@ -1,0 +1,79 @@
+{
+  "source_root": "C:\\Users\\Asus\\Documents\\Codex\\2026-09-06\\the\\outputs",
+  "selected_version": "B",
+  "assets": [
+    {
+      "source": "realism-b/iceberg-realism-b.glb",
+      "destination": "public/models/iceberg-b.glb",
+      "treatment": "exact copy",
+      "source_sha256": "3c94763b3235326f89f5f5f2de62a8ec6ea8fe482959a0a4516d9274fae5b895",
+      "destination_sha256": "3c94763b3235326f89f5f5f2de62a8ec6ea8fe482959a0a4516d9274fae5b895",
+      "source_bytes": 78080,
+      "destination_bytes": 78080
+    },
+    {
+      "source": "portfolio-b/hero.png",
+      "destination": "public/images/iceberg-b.webp",
+      "treatment": "WebP quality 88, maximum 1440 pixels per side, no crop",
+      "source_sha256": "33d2e6a74d9294a08b8e2be767e8fa61a82992e79e93e5246ea70d0b7e986a69",
+      "destination_sha256": "3cdb7583df0930c3cbe76f8b8799255536186a7b810d176457aeea3802dc2d92",
+      "source_bytes": 1660162,
+      "destination_bytes": 31652
+    },
+    {
+      "source": "camera-study/camera-path.mjs",
+      "destination": "src/features/iceberg/camera-path.mjs",
+      "treatment": "exact copy",
+      "source_sha256": "48d9a930987e92a4c4e8b3531e697be6491c421652b66acb2258c0f70a49bd91",
+      "destination_sha256": "48d9a930987e92a4c4e8b3531e697be6491c421652b66acb2258c0f70a49bd91",
+      "source_bytes": 2587,
+      "destination_bytes": 2587
+    },
+    {
+      "source": "camera-study/camera-path.test.mjs",
+      "destination": "tests/camera-path.test.mjs",
+      "treatment": "adapted imports; compare immutable reference fixture instead of rewriting it",
+      "source_sha256": "8a1c65da881ca0d769ffbd5a6e4f559b3326a89bfd8eda5180c70a46b220ddd1",
+      "destination_sha256": "64e6b0f820a8e97f730680e56f53f5c7dcf4b5cc3699b09e0b229457007c8530",
+      "source_bytes": 1865,
+      "destination_bytes": 2016
+    },
+    {
+      "source": "camera-study/path-samples.json",
+      "destination": "tests/fixtures/iceberg/path-samples.json",
+      "treatment": "exact copy; outside public assets",
+      "source_sha256": "3750a5826b6b3401996d4fd5c16fdd823dbd548b3e386405f3bd570920394d32",
+      "destination_sha256": "3750a5826b6b3401996d4fd5c16fdd823dbd548b3e386405f3bd570920394d32",
+      "source_bytes": 401157,
+      "destination_bytes": 401157
+    },
+    {
+      "source": "camera-study/validation.json",
+      "destination": "tests/fixtures/iceberg/mesh-clearance.json",
+      "treatment": "exact copy; outside public assets",
+      "source_sha256": "c57192a36b4a02a9f48387a87cceb1dbd7704d05d2a7ae7092965b3c74234d8c",
+      "destination_sha256": "c57192a36b4a02a9f48387a87cceb1dbd7704d05d2a7ae7092965b3c74234d8c",
+      "source_bytes": 744,
+      "destination_bytes": 744
+    }
+  ],
+  "hero_original_dimensions": [
+    1100,
+    1375
+  ],
+  "hero_dimensions": [
+    1100,
+    1375
+  ],
+  "glb_mesh_names": [
+    "ice_above",
+    "ice_below"
+  ],
+  "glb_extensions": [
+    "KHR_draco_mesh_compression",
+    "KHR_materials_transmission",
+    "KHR_materials_ior",
+    "KHR_materials_volume"
+  ],
+  "note": "GLB metadata and copy fidelity verified. Actual browser decoding/rendering is Phase 3."
+}
