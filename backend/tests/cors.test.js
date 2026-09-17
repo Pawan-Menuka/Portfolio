@@ -20,7 +20,8 @@ describe('CORS allowlist', () => {
   test('rejects an origin not present in FRONTEND_ORIGINS', async () => {
     const app = await freshApp({ FRONTEND_ORIGINS: 'http://localhost:5173' });
     const res = await request(app).get('/health').set('Origin', 'https://evil.example.com');
-    assert.equal(res.status, 500);
+    assert.equal(res.status, 403);
+    assert.equal(res.body.error, 'Origin not allowed');
     assert.equal(res.headers['access-control-allow-origin'], undefined);
   });
 
@@ -33,7 +34,7 @@ describe('CORS allowlist', () => {
   test('PREVIEW_ORIGIN_REGEX is off by default — a plausible preview origin is still rejected', async () => {
     const app = await freshApp({ FRONTEND_ORIGINS: 'http://localhost:5173' });
     const res = await request(app).get('/health').set('Origin', 'https://portfolio-abc123-myteam.vercel.app');
-    assert.equal(res.status, 500);
+    assert.equal(res.status, 403);
   });
 
   test('PREVIEW_ORIGIN_REGEX, when explicitly set, allows a matching origin', async () => {
@@ -54,7 +55,7 @@ describe('CORS allowlist', () => {
     const res = await request(app)
       .get('/health')
       .set('Origin', 'https://portfolio-abc123-myteam.vercel.app.attacker.com');
-    assert.equal(res.status, 500);
+    assert.equal(res.status, 403);
   });
 
   test('allowedHeaders includes X-Requested-With, needed for the CSRF mechanism (7.3)', async () => {

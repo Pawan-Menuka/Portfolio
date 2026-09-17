@@ -11,6 +11,7 @@ export async function getAll({ section, featured, page = 1, limit = 12 } = {}) {
   const skip = (page - 1) * limit;
   const [data, total] = await Promise.all([
     Project.find(query)
+      .select('-__v')
       .sort({ featured: -1, order: 1, publishedAt: -1 })
       .skip(skip)
       .limit(Number(limit))
@@ -39,7 +40,7 @@ export async function getAllAdmin({ section, status, page = 1, limit = 20 } = {}
 }
 
 export async function getBySlug(slug) {
-  const project = await Project.findOne({ slug, status: 'published' }).lean();
+  const project = await Project.findOne({ slug, status: 'published' }).select('-__v').lean();
   if (!project) throw new ApiError(404, 'Project not found');
   return project;
 }

@@ -49,6 +49,14 @@ describe('public project endpoints never expose drafts', () => {
 
     assert.equal(res.status, 200);
     assert.deepEqual(res.body.data.map((p) => p.slug), [PUBLISHED_SLUG]);
+    assert.equal('__v' in res.body.data[0], false);
+  });
+
+  test('GET /projects/:slug omits internal version metadata', async () => {
+    const res = await request(app).get(`/api/v1/projects/${PUBLISHED_SLUG}`);
+
+    assert.equal(res.status, 200);
+    assert.equal('__v' in res.body.data, false);
   });
 
   test('GET /projects/:slug returns 404 for a draft project', async () => {

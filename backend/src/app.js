@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import mongoSanitize from 'express-mongo-sanitize';
 import { errorHandler } from './middleware/error.js';
 import routes from './routes/index.js';
+import { ApiError } from './utils/ApiError.js';
 
 const app = express();
 
@@ -50,7 +51,7 @@ app.use(cors({
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) return callback(null, true);
     if (previewOriginRegex && previewOriginRegex.test(origin)) return callback(null, true);
-    return callback(new Error('Not allowed by CORS'));
+    return callback(new ApiError(403, 'Origin not allowed'));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],

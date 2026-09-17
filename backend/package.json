@@ -5,9 +5,10 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "node --test --test-concurrency=1 tests/",
+    "test": "node --test --test-concurrency=1",
     "seed": "node scripts/seedAdmin.js",
     "seed:profile": "node scripts/seedProfile.js",
+    "seed:content": "node scripts/seedContent.js",
     "deploy:trigger": "node scripts/triggerDeploy.js"
   },
   "engines": {
