@@ -32,6 +32,8 @@ it('does not import the desktop renderer in initial mobile/reduced-motion mode',
 });
 it('leaves the poster visible until ready and restores it after context loss', async () => {
   matches = true; const view = render(<IcebergHero />);
+  expect(preview().dataset.sceneState).toBe('static');
+  fireEvent.pointerMove(window);
   expect(preview().dataset.sceneState).toBe('loading');
   fireEvent.click(await screen.findByText('Finish loading'));
   expect(preview().dataset.sceneState).toBe('ready');
@@ -41,21 +43,22 @@ it('leaves the poster visible until ready and restores it after context loss', a
   expect(view.container.querySelector('.iceberg-poster-hidden')).toBeNull();
 });
 it('unmounts desktop resources when preferences change and reloads with the poster visible', async () => {
-  matches = true; render(<IcebergHero />);
+  matches = true; render(<IcebergHero />); fireEvent.pointerMove(window);
   fireEvent.click(await screen.findByText('Finish loading'));
   policy(false); expect(preview().dataset.sceneState).toBe('static');
   expect(spies.unmounted).toHaveBeenCalled();
-  policy(true); expect(preview().dataset.sceneState).toBe('loading');
+  policy(true); expect(preview().dataset.sceneState).toBe('static');
+  fireEvent.pointerMove(window); expect(preview().dataset.sceneState).toBe('loading');
 });
 it('falls back if loading times out but never times out after readiness', async () => {
-  matches = true; render(<IcebergHero />);
+  matches = true; render(<IcebergHero />); fireEvent.pointerMove(window);
   await screen.findByText('Finish loading');
   vi.useFakeTimers();
   try {
     fireEvent.click(screen.getByText('Finish loading'));
     await act(async () => vi.advanceTimersByTimeAsync(26000));
     expect(preview().dataset.sceneState).toBe('ready');
-    policy(false); policy(true);
+    policy(false); policy(true); fireEvent.pointerMove(window);
     await act(async () => vi.advanceTimersByTimeAsync(26000));
     expect(preview().dataset.sceneState).toBe('static');
   } finally { vi.useRealTimers(); }
@@ -72,6 +75,7 @@ it('keeps enlarged text in document flow and restores the scene after resizing',
     expect(preview().dataset.sceneState).toBe('static');
     document.documentElement.style.fontSize = '16px';
     fireEvent(window, new Event('resize'));
+    fireEvent.pointerMove(window);
     expect(await screen.findByText('Finish loading')).toBeTruthy();
   } finally { document.documentElement.style.removeProperty('font-size'); }
 });

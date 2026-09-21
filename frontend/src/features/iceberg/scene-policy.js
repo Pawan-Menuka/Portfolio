@@ -48,14 +48,23 @@ export function selectInitialSceneTier({
   hardFailure = false,
   desktop = false,
   mobile = false,
+  mobileDevice = false,
+  logicalCores,
+  deviceMemory,
   viewportTallEnough = true,
   calibration = null,
 } = {}) {
   if (reducedMotion || !webgl2 || saveData || hardFailure) return SCENE_TIERS.STATIC;
   if (desktop) return viewportTallEnough ? SCENE_TIERS.DESKTOP_FULL : SCENE_TIERS.STATIC;
-  if (!mobile) return SCENE_TIERS.STATIC;
+  if (!mobile || !mobileDevice) return SCENE_TIERS.STATIC;
   if (storageRecord(calibration)?.tier === SCENE_TIERS.STATIC) return SCENE_TIERS.STATIC;
   if (storageRecord(calibration)?.tier === SCENE_TIERS.MOBILE_ENHANCED) return SCENE_TIERS.MOBILE_ENHANCED;
+  // Mobile browsers that omit memory/CPU capability signals are treated
+  // conservatively. The poster preserves the full story without risking a
+  // costly WebGL decode/render on an unknown or constrained device.
+  const cores = Number.isFinite(logicalCores) ? logicalCores : 0;
+  const memory = Number.isFinite(deviceMemory) ? deviceMemory : 0;
+  if (cores < 4 || memory < 4) return SCENE_TIERS.STATIC;
   return SCENE_TIERS.MOBILE_LIGHT;
 }
 
@@ -86,6 +95,8 @@ function browserPolicyInput() {
   // desktopQuery already requires no-preference, so a real browser cannot match
   // both. The guard also keeps policy deterministic in minimal test shims.
   const reducedMotion = !desktop && (window.matchMedia?.(reducedMotionQuery).matches ?? false);
+  const mobileDevice = window.navigator?.userAgentData?.mobile
+    ?? /Android|iPhone|iPad|iPod|Mobile/i.test(window.navigator?.userAgent ?? '');
   return {
     reducedMotion,
     webgl2: typeof window.WebGL2RenderingContext !== 'undefined',
@@ -93,6 +104,9 @@ function browserPolicyInput() {
     hardFailure: calibration?.tier === SCENE_TIERS.STATIC,
     desktop,
     mobile: window.matchMedia?.(mobileQuery).matches ?? window.innerWidth <= 900,
+    mobileDevice,
+    logicalCores: window.navigator?.hardwareConcurrency,
+    deviceMemory: window.navigator?.deviceMemory,
     viewportTallEnough: window.innerHeight >= rootTextSize() * 40,
     calibration,
   };

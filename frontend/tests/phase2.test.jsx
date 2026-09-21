@@ -88,7 +88,7 @@ describe('Projects', () => {
     const user = userEvent.setup(); show(<Projects />, '/projects?section=hardware');
     await screen.findByRole('heading', { name: 'Hardware project' });
     expect(getProjects.mock.calls[0][0]).toBe('page=1&limit=100');
-    await user.click(screen.getByRole('tab', { name: 'Distributed Systems' }));
+    await user.click(screen.getByRole('button', { name: 'Distributed Systems' }));
     await screen.findByRole('heading', { name: 'Systems project' });
     expect(screen.getByLabelText('Current route').textContent).toBe('/projects?section=systems');
   });
@@ -112,7 +112,7 @@ describe('Projects', () => {
     getProjects.mockResolvedValue(list([project('Hardware result'), { ...project('Systems result', 'systems-result'), section: 'systems' }]));
     const user = userEvent.setup(); show(<Projects />);
     await screen.findByRole('heading', { name: 'Hardware result' });
-    await user.click(screen.getByRole('tab', { name: 'Distributed Systems' }));
+    await user.click(screen.getByRole('button', { name: 'Distributed Systems' }));
     await screen.findByRole('heading', { name: 'Systems result' });
     expect(getProjects).toHaveBeenCalledTimes(1);
   });
@@ -123,13 +123,15 @@ describe('Projects', () => {
       { ...project('Full-stack project', 'full-stack-project'), section: 'full-stack', order: 5 },
     ]));
     const view = show(<Projects />, '/projects');
-    expect(await screen.findByRole('button', { name: 'Full-stack project (current)' })).toBeTruthy();
-    expect(view.container.querySelector('.slab[aria-label="Blockchain project"]').style.getPropertyValue('--o')).toBe('1');
+    await screen.findByRole('heading', { name: 'Full-stack project' });
+    expect(view.container.querySelector('.slab.is-centre .slab__title').textContent).toBe('Full-stack project');
+    const blockchain = [...view.container.querySelectorAll('.slab')].find(card => card.querySelector('.slab__title')?.textContent === 'Blockchain project');
+    expect(blockchain.style.getPropertyValue('--o')).toBe('1');
   });
   it('keeps Music visible and gives an empty Music layer a useful state', async () => {
     getProjects.mockResolvedValue(list([project('Hardware result')]));
     const user = userEvent.setup(); show(<Projects />, '/projects');
-    const musicTab = await screen.findByRole('tab', { name: 'Music' });
+    const musicTab = await screen.findByRole('button', { name: 'Music' });
     await user.click(musicTab);
     expect(screen.getByText('No published Music projects yet')).toBeTruthy();
     expect(screen.getByLabelText('Current route').textContent).toBe('/projects?section=creative');
@@ -140,8 +142,9 @@ describe('Projects', () => {
     const user = userEvent.setup(); const view = show(<Projects />, '/projects');
     await screen.findByRole('heading', { name: 'Project 1' });
     await user.click(screen.getByRole('button', { name: 'Previous project' }));
-    expect(screen.getByRole('button', { name: 'Project 6 (current)' })).toBeTruthy();
-    expect(view.container.querySelector('.slab[aria-label="Project 1"]').style.getPropertyValue('--o')).toBe('1');
+    expect(view.container.querySelector('.slab.is-centre .slab__title').textContent).toBe('Project 6');
+    const first = [...view.container.querySelectorAll('.slab')].find(card => card.querySelector('.slab__title')?.textContent === 'Project 1');
+    expect(first.style.getPropertyValue('--o')).toBe('1');
   });
   it('handles a missing project detail', async () => {
     getProject.mockRejectedValue(Object.assign(new Error('Project not found'), { status: 404 }));

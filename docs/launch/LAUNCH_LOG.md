@@ -170,3 +170,22 @@ Phase 1 remains blocked on credential rotation, verified encrypted backup/restor
 ### Remaining Phase 1 gate
 
 - Rotate the exposed Atlas credential, complete encrypted backup/restore verification, and configure controlled Resend values for one labelled end-to-end contact test.
+
+## 2026-09-20 — Local pre-deployment validation
+
+### Completed
+
+- Finished the locally executable responsive, accessibility, performance, SEO, repository-cleanup, and regression work without deploying the site.
+- Added route-level axe coverage, fixed narrow navigation, landmarks, form associations, external-link announcements, carousel labels, and carousel touch targets.
+- Split inner routes, deferred WebGL until user interaction, eliminated duplicate decoder output, and reduced the scene font from 876,576 to 168,344 bytes.
+- Added canonical robots and sitemap files.
+- Replaced vulnerable backend dependency versions with fixed releases, completed the Express 5 query/sanitizer compatibility work, and reached zero findings in both npm audits.
+- Backend passes 91 tests. Frontend passes 9 Node tests and 70 Vitest tests; lint and the 256-module production build pass.
+- Repeated dependency installation, audits, all tests, lint, and build from a temporary clean checkout; the result is reproducible from both lockfiles.
+- Local Lighthouse evidence is recorded in `PREDEPLOYMENT_VALIDATION_2026-09-20.md`.
+
+### Remaining gate
+
+- Atlas credential rotation must be confirmed before encrypted dump/restore verification.
+- Resend notification variables are not configured, so the labelled storage-plus-inbox Contact test cannot run.
+- Physical Android/iPhone and NVDA/VoiceOver coverage, hosted CDN measurements, staging, and production remain external/deployment work.

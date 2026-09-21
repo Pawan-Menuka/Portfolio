@@ -10,7 +10,7 @@ import {
 } from '../src/features/iceberg/scene-policy.js';
 import { getSceneQuality, SCENE_QUALITY } from '../src/features/iceberg/scene-quality.js';
 
-const eligibleMobile = { webgl2: true, mobile: true };
+const eligibleMobile = { webgl2: true, mobile: true, mobileDevice: true, logicalCores: 6, deviceMemory: 4 };
 
 describe('scene tier policy', () => {
   it.each([
@@ -30,6 +30,13 @@ describe('scene tier policy', () => {
   it('starts an eligible uncalibrated mobile in light mode', () => {
     expect(selectInitialSceneTier(eligibleMobile)).toBe(SCENE_TIERS.MOBILE_LIGHT);
     expect(selectInitialSceneTier({ webgl2: true })).toBe(SCENE_TIERS.STATIC);
+  });
+
+  it('uses the static fallback when mobile capability signals are absent or constrained', () => {
+    expect(selectInitialSceneTier({ webgl2: true, mobile: true, mobileDevice: true })).toBe(SCENE_TIERS.STATIC);
+    expect(selectInitialSceneTier({ ...eligibleMobile, logicalCores: 2 })).toBe(SCENE_TIERS.STATIC);
+    expect(selectInitialSceneTier({ ...eligibleMobile, deviceMemory: 2 })).toBe(SCENE_TIERS.STATIC);
+    expect(selectInitialSceneTier({ ...eligibleMobile, mobileDevice: false })).toBe(SCENE_TIERS.STATIC);
   });
 
   it('uses only a current compatible calibration as a starting hint', () => {
