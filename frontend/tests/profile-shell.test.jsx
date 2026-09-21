@@ -29,7 +29,7 @@ it('keeps the identity, navigation and all journey destinations available with e
   expect(document.querySelector('.credential-line').textContent).toContain("SLIIT '27");
   expect(screen.getAllByRole('link', { name: /View projects/ })).toHaveLength(5);
   fireEvent.click(screen.getByRole('link', { name: 'CV', exact: true }));
-  expect((await screen.findByRole('link', { name: 'Open CV' })).getAttribute('href')).toBe('/Pawan-Menuka-CV.pdf');
+  expect((await screen.findByRole('link', { name: 'Open CV (opens in a new tab)' })).getAttribute('href')).toBe('/Pawan-Menuka-CV.pdf');
   expect(document.title).toBe('CV · Pawan');
   expect(document.activeElement.id).toBe('main-content');
 });

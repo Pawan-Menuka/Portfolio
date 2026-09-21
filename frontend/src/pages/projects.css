@@ -202,15 +202,22 @@
   transition: border-color 0.3s, background 0.3s, transform 0.3s, color 0.3s;
 }
 .deck-arrow:hover { border-color: var(--pm-accent); background: #062431cc; color: #f6fcfe; }
-.deck-dots { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; }
+.deck-dots { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0; }
 .deck-dot {
-  width: 7px; height: 7px; padding: 0;
+  display: grid; place-items: center;
+  width: 28px; height: 28px; padding: 0;
   border: 0; border-radius: 999px;
-  background: #1c414f;
+  background: transparent;
   cursor: pointer;
+}
+.deck-dot::before {
+  width: 7px; height: 7px;
+  border-radius: inherit;
+  background: #1c414f;
+  content: '';
   transition: width 0.45s var(--pm-ease), background 0.35s ease;
 }
-.deck-dot.is-on {
+.deck-dot.is-on::before {
   width: 26px;
   background: var(--pm-accent);
   box-shadow: 0 0 12px 2px color-mix(in srgb, var(--pm-accent) 40%, transparent);

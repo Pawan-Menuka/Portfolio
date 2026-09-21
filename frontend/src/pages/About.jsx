@@ -32,7 +32,7 @@ export default function About() {
     <header className="pm-shell about-head"><div className="pm-eyebrow"><span className="pm-eyebrow__dot" /><span className="pm-eyebrow__label">02 / About</span><span className="pm-eyebrow__rule" /></div><h1 className="pm-h1 about-head__title">{profile?.headline || 'The part below the line'}</h1></header>
     {status === 'loading' ? <div className="pm-shell"><PageState status="loading" body="Fetching profile…" /></div> : status === 'error' ? <div className="pm-shell"><PageState status="error" title="Profile did not load" body={error} onRetry={retry} /></div> : <>
       <section className="pm-shell about-intro">
-        <figure className="pm-figure about-portrait">{portrait ? <img src={portrait} alt={`${profile?.name || 'Pawan Menuka'} portrait`} /> : <span className="pm-figure__empty">Portrait coming soon</span>}<span className="pm-figure__scrim" /><span className="pm-figure__edge" /></figure>
+        <figure className="pm-figure about-portrait">{portrait ? <img src={portrait} alt={`${profile?.name || 'Pawan Menuka'} portrait`} width="512" height="512" decoding="async" /> : <span className="pm-figure__empty">Portrait coming soon</span>}<span className="pm-figure__scrim" /><span className="pm-figure__edge" /></figure>
         <div className="about-copy">
           {shortBio ? <p className="about-copy__lead">{shortBio}</p> : <p className="about-copy__lead">A fuller introduction will be added soon.</p>}
           {bio && <div className="about-copy__body about-copy__markdown"><Markdown>{bio}</Markdown></div>}

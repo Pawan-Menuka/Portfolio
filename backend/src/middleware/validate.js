@@ -11,6 +11,18 @@ export const validate = (schema, source = 'body') => (req, res, next) => {
       .join(', ');
     throw new ApiError(400, message);
   }
-  req[source] = result.data;
+  if (source === 'query') {
+    // Express 5 exposes req.query through a prototype getter. Shadow it on
+    // this request with the parsed, validated value instead of assigning to
+    // the getter (which throws in strict mode).
+    Object.defineProperty(req, 'query', {
+      value: result.data,
+      writable: false,
+      configurable: true,
+      enumerable: true,
+    });
+  } else {
+    req[source] = result.data;
+  }
   next();
 };

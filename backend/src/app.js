@@ -6,11 +6,16 @@ import compression from 'compression';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import mongoSanitize from 'express-mongo-sanitize';
+import qs from 'qs';
 import { errorHandler } from './middleware/error.js';
 import routes from './routes/index.js';
 import { ApiError } from './utils/ApiError.js';
 
 const app = express();
+
+// Express 5 exposes req.query as a read-only getter. Sanitize while parsing
+// instead of relying on middleware that assigns a replacement query object.
+app.set('query parser', (query) => mongoSanitize.sanitize(qs.parse(query)));
 
 // Behind a platform reverse proxy (Render/Railway/Vercel/etc.) in
 // production, requests arrive from the proxy's own address unless Express is
@@ -67,8 +72,12 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Security sanitization
-app.use(mongoSanitize());
+// Security sanitization. Body objects are writable and can be sanitized in
+// place; query objects are already sanitized by the parser above.
+app.use((req, _res, next) => {
+  if (req.body) mongoSanitize.sanitize(req.body);
+  next();
+});
 
 // Performance
 app.use(compression());

@@ -73,17 +73,17 @@ export default function ProjectDetail() {
       <div className="case-head__row"><span className="case-head__section">{sectionLabel(project.section)}</span>{year && <><span className="slab__tick" /><span className="case-head__year">{year}</span></>}</div>
       <h1 className="pm-h1 case-head__title">{project.title}</h1>
       <p className="case-head__summary">{project.summary}</p>
-      <div className="case-head__actions">{live && <a className="pm-btn" href={live} target="_blank" rel="noopener noreferrer"><span className="pm-btn__icon">↗</span><span className="pm-btn__label">Live site</span></a>}{demo && <a className="pm-btn" href={demo} target="_blank" rel="noopener noreferrer"><span className="pm-btn__icon">▶</span><span className="pm-btn__label">View demo</span></a>}{github && <a className="pm-link-quiet" href={github} target="_blank" rel="noopener noreferrer">Source ↗</a>}</div>
+      <div className="case-head__actions">{live && <a className="pm-btn" href={live} target="_blank" rel="noopener noreferrer" aria-label="Live site (opens in a new tab)"><span className="pm-btn__icon" aria-hidden="true">↗</span><span className="pm-btn__label">Live site</span></a>}{demo && <a className="pm-btn" href={demo} target="_blank" rel="noopener noreferrer" aria-label="View demo (opens in a new tab)"><span className="pm-btn__icon" aria-hidden="true">▶</span><span className="pm-btn__label">View demo</span></a>}{github && <a className="pm-link-quiet" href={github} target="_blank" rel="noopener noreferrer" aria-label="Source code (opens in a new tab)">Source ↗</a>}</div>
     </header>
-    {cover && <div className="pm-shell case-hero"><figure className="pm-figure case-hero__figure"><img src={cover.url} alt={cover.alt} /><span className="pm-figure__scrim" /><span className="pm-figure__edge" /></figure></div>}
-    <main className="pm-shell case-body">
+    {cover && <div className="pm-shell case-hero"><figure className="pm-figure case-hero__figure"><img src={cover.url} alt={cover.alt} decoding="async" fetchPriority="high" /><span className="pm-figure__scrim" /><span className="pm-figure__edge" /></figure></div>}
+    <div className="pm-shell case-body">
       <aside className="case-aside"><dl className="case-facts">{facts.map(fact => <div key={fact.k} className="case-facts__row"><dt>{fact.k}</dt><dd>{fact.v}</dd></div>)}</dl>{project.tags?.length > 0 && <><span className="case-aside__rule" /><div><div className="case-aside__label">Stack</div><div className="pm-chips">{project.tags.map(tag => <span key={tag} className="pm-chip">{tag}</span>)}</div></div></>}</aside>
       <div className="case-main">
         {project.description && <section><div className="pm-section-head"><h2>Overview</h2><span className="pm-section-head__rule" /></div><div className="case-prose"><Markdown>{project.description}</Markdown></div></section>}
-        {gallery.length > 0 && <section><div className="pm-section-head"><h2>Screens</h2><span className="pm-section-head__rule" /></div><div className="case-gallery">{gallery.map(item => <figure key={item.url} className="case-gallery__item"><img src={item.url} alt={item.alt} loading="lazy" /></figure>)}</div></section>}
+        {gallery.length > 0 && <section><div className="pm-section-head"><h2>Screens</h2><span className="pm-section-head__rule" /></div><div className="case-gallery">{gallery.map(item => <figure key={item.url} className="case-gallery__item"><img src={item.url} alt={item.alt} loading="lazy" decoding="async" /></figure>)}</div></section>}
         {project.models3d?.length > 0 && <section><div className="pm-section-head"><h2>3D assets</h2><span className="pm-section-head__rule" /></div><p className="case-note">This project includes {project.models3d.length} downloadable 3D {project.models3d.length === 1 ? 'asset' : 'assets'}.</p></section>}
       </div>
-    </main>
+    </div>
     {next.length > 0 && <section className="pm-shell case-next"><div className="pm-section-head"><span className="pm-section-head__label">Next in the deck</span><span className="pm-section-head__rule" /></div><div className="case-next__grid">{next.map(item => <Link key={item.slug} to={`/projects/${encodeURIComponent(item.slug)}`} className="pm-slab pm-slab--lift case-next__card"><span className="case-next__row"><span className="case-head__section">{sectionLabel(item.section)}</span><span className="case-next__year">{projectYear(item)}</span></span><span className="case-next__title">{item.title}<span>→</span></span></Link>)}</div></section>}
     <SiteFooter label="Projects" />
   </div>;
