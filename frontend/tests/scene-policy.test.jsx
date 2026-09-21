@@ -85,4 +85,9 @@ describe('quality configuration', () => {
     expect(light.shadows).toBe(false);
     expect(light.dpr[1]).toBe(1);
   });
+
+  it('keeps the demand-rendered desktop ocean advancing', () => {
+    const desktop = getSceneQuality(SCENE_TIERS.DESKTOP_FULL);
+    expect(desktop.ambientFps).toBeGreaterThan(0);
+  });
 });

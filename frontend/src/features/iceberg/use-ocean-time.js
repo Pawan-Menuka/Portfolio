@@ -5,6 +5,7 @@ export function useOceanTime(framesPerSecond = 24) {
   const time = useMemo(() => ({ value: 0 }), []);
   const { gl, invalidate } = useThree();
   useEffect(() => {
+    const targetFps = framesPerSecond == null ? 24 : framesPerSecond;
     let timer, inView = true, previous = performance.now();
     const update = () => {
       const now = performance.now();
@@ -15,7 +16,7 @@ export function useOceanTime(framesPerSecond = 24) {
     const sync = () => {
       clearInterval(timer);
       previous = performance.now();
-      if (!document.hidden && inView && framesPerSecond > 0) { update(); timer = setInterval(update, 1000 / framesPerSecond); }
+      if (!document.hidden && inView && targetFps > 0) { update(); timer = setInterval(update, 1000 / targetFps); }
     };
     const observer = new IntersectionObserver(entries => { inView = entries[0].isIntersecting; sync(); });
     observer.observe(gl.domElement);
