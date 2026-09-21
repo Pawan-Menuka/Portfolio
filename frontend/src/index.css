@@ -1,8 +1,10 @@
-:root {
-  color-scheme: light dark;
-  font: 16px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
-}
-
-body {
-  margin: 0;
-}
+:root { color-scheme: dark; font: 16px/1.6 'Segoe UI', sans-serif; color: #d8e7ef; background: #030b12; font-synthesis: none; --muted: #9cb3c3; --accent: #bce8f0; --line: #253541; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 280px; }
+a { color: inherit; text-underline-offset: .25em; }
+button, input, textarea { font: inherit; }
+:focus-visible { outline: 3px solid #8ce7ff; outline-offset: 5px; }
+button { cursor: pointer; }
+h1, h2, p { margin-top: 0; }
+h1, h2 { line-height: 1.1; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

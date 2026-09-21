@@ -3,7 +3,7 @@ import { ApiError } from '../utils/ApiError.js';
 
 export async function getAll({ category } = {}) {
   const query = category ? { category } : {};
-  return Skill.find(query).sort({ category: 1, order: 1, level: -1 }).lean();
+  return Skill.find(query).select('-__v').sort({ category: 1, order: 1, level: -1 }).lean();
 }
 
 export async function create(data) {

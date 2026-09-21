@@ -1,0 +1,195 @@
+[
+  {
+    "title": "CNC Steel Clamp",
+    "slug": "cnc-steel-clamp",
+    "section": "hardware",
+    "summary": "A precision six-jaw clamp machined from steel as part of my CNC work.",
+    "description": "## Overview\n\nA precision six-jaw clamp machined from steel. The project brought CAD preparation, CAM setup, workholding, and CNC machining together in a finished mechanical component.\n\n## Build\n\nThe part was planned around six-jaw geometry, machined as a physical assembly, and checked after machining for fit and usable clamping movement.",
+    "tags": ["Steel", "CNC", "CAM", "Machining"],
+    "gallery": [],
+    "models3d": [],
+    "links": { "github": "", "live": "", "demo": "" },
+    "meta": { "role": "Designer and machinist", "completed": "2026", "timeline": "2026", "status": "Complete" },
+    "featured": false,
+    "order": 1,
+    "status": "published"
+  },
+  {
+    "title": "CNC Aluminum Clamp",
+    "slug": "cnc-aluminum-clamp",
+    "section": "hardware",
+    "summary": "A precision six-jaw clamp machined from 6061 aluminum as part of my CNC work.",
+    "description": "## Overview\n\nA precision six-jaw clamp machined from 6061 aluminum. The project brought CAD preparation, CAM setup, workholding, and CNC machining together in a finished mechanical component.\n\n## Build\n\nThe part was planned around six-jaw geometry, machined as a physical assembly, and checked after machining for fit and usable clamping movement.",
+    "tags": ["6061 Aluminum", "CNC", "CAM", "Machining"],
+    "gallery": [],
+    "models3d": [],
+    "links": { "github": "", "live": "", "demo": "" },
+    "meta": { "role": "Designer and machinist", "completed": "2026", "timeline": "2026", "status": "Complete" },
+    "featured": false,
+    "order": 2,
+    "status": "published"
+  },
+  {
+    "title": "Impromptu Speech Trainer",
+    "slug": "impromptu-speech-trainer",
+    "section": "full-stack",
+    "summary": "A deployed AI speech-coaching platform: record a timed impromptu speech, get per-criterion feedback from a rubric that tightens with difficulty.",
+    "description": "## Overview\n\nImpromptu Speech Trainer is a production web application for practising timed\nimpromptu speaking. You receive a prompt, speak against a countdown, and get\nper-criterion AI feedback on the recording — with scoring rubrics that tighten\nas the difficulty level rises, so a score at hard difficulty is not the same\nachievement as the identical score at easy.\n\nBuilt and deployed solo.\n\n## The record-to-score pipeline\n\nThe core of the product is a single pipeline engineered end to end:\n\n1. **Capture** — browser audio recording in the client.\n2. **Store** — the audio object is uploaded to Cloudflare R2.\n3. **Transcribe** — AssemblyAI returns the transcript along with filler-word\n   detection and words-per-minute analysis.\n4. **Score** — an LLM evaluates the transcript against difficulty-scaled rubrics\n   and returns structured per-criterion feedback.\n5. **Persist** — sessions and scores are modelled in PostgreSQL through Prisma\n   and surfaced as a Recharts progress dashboard.\n\n## Engineering decisions worth naming\n\n**Provider fallback under upstream failure.** A third-party outage during\ndevelopment took the scoring path down. Rather than wait it out, I implemented\na fallback from the Claude API to Gemini, so the scoring path stays available\nwhen the primary provider does not. This was a reaction to a real incident,\nnot a hypothetical one.\n\n**Bounded AI spend.** Per-user distributed rate limiting on Upstash Redis caps\nhow much inference any single account can trigger. An AI feature with an\nunbounded cost per user is a feature that cannot be left running in public.\n\n**Difficulty-scaled rubrics.** Scoring criteria tighten with difficulty, so\nprogress over time is measured against a moving standard rather than a fixed one.\n\n## Deployment\n\nDeployed on Vercel with GitHub Actions CI, and a Cloudflare R2 CDN serving\naudio and optimised image assets.\n",
+    "tags": [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "PostgreSQL",
+      "Prisma",
+      "Clerk",
+      "AssemblyAI",
+      "Claude API",
+      "Cloudflare R2",
+      "Upstash Redis",
+      "Vercel"
+    ],
+    "coverImage": {
+      "url": "",
+      "publicId": ""
+    },
+    "gallery": [],
+    "models3d": [],
+    "links": {
+      "github": "https://github.com/Pawan-Menuka/Impromptu-Speech",
+      "live": "https://impromptu.pawanmenuka.com",
+      "demo": ""
+    },
+    "meta": {
+      "role": "Solo",
+      "started": "2026-06",
+      "completed": "2026-07",
+      "timeline": "June 2026 – July 2026",
+      "status": "Live in production"
+    },
+    "featured": false,
+    "order": 3,
+    "status": "published"
+  },
+  {
+    "title": "Aranya Ceylon",
+    "slug": "aranya-ceylon",
+    "section": "full-stack",
+    "summary": "A dual-market e-commerce platform — LKR and USD from one catalog — with token-rotation auth, idempotent payment webhooks and atomic checkout.",
+    "description": "## Overview\n\nAranya Ceylon is a full-stack e-commerce platform built to sell into two markets\nat once — local Sri Lankan customers paying in LKR and international customers\npaying in USD — from a single catalog, with market-scoped pricing and separate\npayment gateways.\n\nBuilt solo, as a pnpm monorepo.\n\n## Architecture\n\nThree workspaces: a Next.js 14 App Router storefront, an Express REST API, and a\nshared Zod schema package consumed by both. The shared schemas give end-to-end\nTypeScript type safety across the client/server boundary — a contract change\nthat breaks the frontend fails at compile time rather than in production.\n\n## Authentication\n\nShort-lived JWT access tokens with opaque refresh-token rotation and\ntoken-family reuse detection: if a refresh token is replayed, the entire token\nfamily is invalidated rather than just the individual token. All browser traffic\nroutes through a same-origin backend-for-frontend proxy so tokens stay in\nHttpOnly cookies and are never reachable from client JavaScript.\n\n## Commerce engine\n\n- **Dual market.** Market-scoped pricing with separate gateways — Stripe for\n  international, PayHere for local.\n- **Idempotent webhooks.** Stripe webhook handling is idempotent, so a redelivered\n  event cannot double-fulfil or double-charge an order.\n- **Atomic checkout and refunds.** Checkout and refund paths run as transactions\n  with stock restoration, so a failure mid-flow cannot leave inventory wrong.\n- **Integer-cents money arithmetic.** Prices are stored and computed in integer\n  cents throughout, eliminating floating-point pricing errors.\n\n## Data layer\n\nPostgreSQL modelled with Prisma across 14 migrations, using full-text search for\nthe catalog and cursor pagination rather than offset pagination.\n\n## Admin console\n\nA role-gated admin surface covering revenue reporting, inventory and image\nmanagement, order fulfilment and refunds, and an append-only audit log. Backed\nby a Vitest regression suite running in GitHub Actions CI.\n\n## Status\n\nFeature-complete and covered by tests. Not yet public — the remaining work is\nproduct photography to replace placeholder imagery across the catalog.\n",
+    "tags": [
+      "Next.js 14",
+      "TypeScript",
+      "Express",
+      "Prisma",
+      "PostgreSQL",
+      "Stripe",
+      "PayHere",
+      "Zod",
+      "Vitest",
+      "pnpm monorepo"
+    ],
+    "coverImage": {
+      "url": "",
+      "publicId": ""
+    },
+    "gallery": [],
+    "models3d": [],
+    "links": {
+      "github": "https://github.com/Pawan-Menuka/Aranya-Ceylon",
+      "live": "",
+      "demo": ""
+    },
+    "meta": {
+      "role": "Solo",
+      "started": "2026-03",
+      "completed": "2026-09",
+      "timeline": "March 2026 – September 2026",
+      "status": "Feature-complete, pending launch"
+    },
+    "featured": false,
+    "order": 4,
+    "status": "published"
+  },
+  {
+    "title": "Smart Healthcare Platform",
+    "slug": "smart-healthcare-platform",
+    "section": "systems",
+    "summary": "Service owner for the appointment domain in a microservices healthcare platform — a concurrency-safe hold-then-book flow that cannot double-book.",
+    "description": "## Overview\n\nA microservices healthcare platform built as a group project. I owned the\n**appointment domain** end to end — the service itself plus its integrations\nwith the doctor, patient, payment, notification and telemedicine services.\n\n## The hard problem: double-booking\n\nTwo patients hitting the same slot at the same instant must not both succeed.\nThe solution is a two-phase hold-then-book flow with defence at several layers:\n\n- **Redis slot holds with TTL expiry** — selecting a slot takes a short-lived\n  hold rather than a booking, so a browsing user cannot occupy a slot forever.\n- **Per-patient hold limits** — one user cannot lock out a doctor's whole day.\n- **MongoDB multi-document transactions** — the booking commit is atomic across\n  documents.\n- **A unique compound index** — the database itself rejects a duplicate booking\n  if every layer above somehow lets one through.\n\nThe index is the important one. The first three layers reduce the probability of\na collision; only the index makes it impossible.\n\n## Appointment lifecycle\n\nThe full state machine: hold → booked → confirmed → rescheduled → completed →\ncancelled → no-show, with a dual-party attendance confirmation model (both\ndoctor and patient confirm) and a policy-driven cancellation cutoff.\n\n## Event-driven integration\n\nAn integration layer over RabbitMQ with BullMQ background workers handles:\n\n- automatic release of expired holds\n- 24-hour and 1-hour appointment reminders\n- waitlist auto-promotion when a slot frees up\n\n## Operations\n\nContainerised with Docker, with authored Kubernetes manifests and the API\ndocumented in OpenAPI/Swagger.\n",
+    "tags": [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Redis",
+      "BullMQ",
+      "RabbitMQ",
+      "JWT",
+      "Docker",
+      "Kubernetes",
+      "React",
+      "OpenAPI"
+    ],
+    "coverImage": {
+      "url": "",
+      "publicId": ""
+    },
+    "gallery": [],
+    "models3d": [],
+    "links": {
+      "github": "https://github.com/Vihanga-Deemantha/Smart-Health-Care",
+      "live": "",
+      "demo": ""
+    },
+    "meta": {
+      "role": "Group project — service owner, appointment domain",
+      "started": "2026-04",
+      "completed": "2026-04",
+      "timeline": "April 2026",
+      "status": "Complete"
+    },
+    "featured": false,
+    "order": 5,
+    "status": "published"
+  },
+  {
+    "title": "Decentralized Freelance Escrow Protocol",
+    "slug": "decentralized-freelance-escrow-protocol",
+    "section": "blockchain",
+    "summary": "Milestone-based escrow smart contracts on Sepolia, validated with Foundry fuzz and invariant suites and Slither in CI.",
+    "description": "## Overview\n\nA milestone-based escrow protocol for freelance work, written in Solidity and\ndeployed and verified on the Sepolia testnet. Funds are committed up front and\nreleased per milestone rather than in a single lump, so neither party has to\nextend full trust to the other.\n\nBuilt solo.\n\n## Contract design\n\n- **Per-milestone state machine** — each milestone moves through its own states\n  independently, so a dispute on one does not freeze the rest of the engagement.\n- **Pull-payment withdrawals** — recipients withdraw rather than the contract\n  pushing funds, which removes a whole class of failed-transfer and reentrancy\n  problems.\n- **Milestone-level dispute handling** — disputes are scoped to the milestone in\n  question.\n- **OpenZeppelin ReentrancyGuard and Pausable** patterns throughout.\n\n## Verification\n\nCorrectness here is not something you assert, it is something you test for:\n\n- **Foundry fuzz and invariant suites** validating contract invariants across\n  randomised inputs and call sequences.\n- **Slither static analysis** running in GitHub Actions CI, so a regression in\n  contract safety fails the build.\n\n## Oracle integration\n\n- **Chainlink Price Feeds** for USD-denominated milestone pricing, so a milestone\n  worth $500 stays worth $500 regardless of token volatility.\n- **Chainlink Automation** for time-locked auto-release, so a client who\n  disappears cannot strand a completed milestone indefinitely.\n\n## Frontend\n\nA React client using wagmi/viem for contract interaction, with The Graph\nindexing on-chain events for history and state.\n",
+    "tags": [
+      "Solidity",
+      "Hardhat",
+      "Foundry",
+      "OpenZeppelin",
+      "Chainlink",
+      "The Graph",
+      "React",
+      "wagmi",
+      "viem",
+      "Slither"
+    ],
+    "coverImage": {
+      "url": "",
+      "publicId": ""
+    },
+    "gallery": [],
+    "models3d": [],
+    "links": {
+      "github": "https://github.com/Pawan-Menuka/Decentralized-Escrow-Platform",
+      "live": "",
+      "demo": ""
+    },
+    "meta": {
+      "role": "Solo",
+      "started": "2026-07",
+      "completed": "2026-08",
+      "timeline": "July 2026 – August 2026",
+      "status": "Deployed and verified on Sepolia testnet",
+      "network": "Sepolia testnet"
+    },
+    "featured": false,
+    "order": 6,
+    "status": "published"
+  }
+]

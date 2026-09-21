@@ -1,0 +1,22 @@
+{
+  "A": {
+    "samples": 2001,
+    "minimum_sampled_mesh_clearance_m": 38.40847396850586,
+    "mesh_maximum_radius_m": 29.6336984925354,
+    "minimum_camera_radius_m": 46,
+    "geometry_unchanged": true,
+    "study_frames": 481,
+    "study_duration_seconds": 20,
+    "note": "Opaque geometry study, not final web materials or an interactive browser test."
+  },
+  "B": {
+    "samples": 2001,
+    "minimum_sampled_mesh_clearance_m": 38.432010650634766,
+    "mesh_maximum_radius_m": 29.6336984925354,
+    "minimum_camera_radius_m": 46,
+    "geometry_unchanged": true,
+    "study_frames": 481,
+    "study_duration_seconds": 20,
+    "note": "Opaque geometry study, not final web materials or an interactive browser test."
+  }
+}

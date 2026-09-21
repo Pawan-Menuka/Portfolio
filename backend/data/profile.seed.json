@@ -1,0 +1,35 @@
+{
+  "name": "Pawan Menuka",
+  "legalName": "Balacharige Pawan Menuka",
+  "headline": "Software Engineering Undergraduate · Full-stack & Backend · SLIIT '27",
+  "shortBio": "Third-year Software Engineering undergraduate at SLIIT who ships production full-stack systems — a deployed AI speech-coaching platform, a dual-market e-commerce platform, and a concurrency-safe appointment microservice.",
+  "bio": "## About\n\nI am a third-year Software Engineering undergraduate at SLIIT, based in Colombo.\nMost of what I build is full-stack and production-shaped: real authentication,\nreal payment flows, real failure handling. I care less about how many projects\nexist and more about whether each one would survive contact with actual users.\n\n### What I work on\n\nThe visible half is web engineering — TypeScript and Next.js on the front,\nNode.js and Express REST APIs behind it, PostgreSQL or MongoDB underneath,\ncontainerised and deployed through CI. That covers an AI speech-coaching\nplatform running in production, a dual-market e-commerce platform with\ntoken-rotation auth and idempotent payment webhooks, and a concurrency-safe\nappointment microservice inside a larger healthcare system.\n\nFurther down there is work that does not fit a standard web CV: milestone-based\nescrow smart contracts in Solidity, verified on Sepolia and validated with\nFoundry fuzz and invariant suites.\n\n### How I work\n\nI prefer problems where correctness is checkable. The appointment service\nexists because double-booking under a race condition is a real bug with a real\nfix — Redis holds with TTL expiry, MongoDB multi-document transactions, and a\nunique compound index as the last line of defence. The e-commerce catalog\nstores money as integer cents because floating-point pricing errors are not\ntheoretical. That instinct shows up across everything here.\n\n### Right now\n\nI am looking for a software engineering internship in full-stack or backend\ndevelopment, and preparing for the AWS Certified Developer — Associate exam.\n",
+  "roles": [
+    "Full-stack Developer",
+    "Backend Developer",
+    "Software Engineering Undergraduate"
+  ],
+  "location": "Colombo, Sri Lanka",
+  "avatar": {
+    "url": "https://pawanmenuka.com/images/pawan-menuka-avatar.webp",
+    "publicId": "static:pawan-menuka-avatar-v1"
+  },
+  "socials": {
+    "github": "https://github.com/Pawan-Menuka",
+    "linkedin": "https://linkedin.com/in/pawan-menuka-1356593aa",
+    "email": "pawanmenuka02@gmail.com",
+    "website": "https://pawanmenuka.com"
+  },
+  "availability": {
+    "available": true,
+    "text": "Open to software engineering internships — full-stack or backend"
+  },
+  "seo": {
+    "title": "Pawan Menuka · Software Engineer",
+    "description": "Software Engineering undergraduate at SLIIT. Full-stack and backend work: Next.js, Node.js, PostgreSQL, microservices, and Solidity smart contracts.",
+    "ogImage": {
+      "url": "https://pawanmenuka.com/images/pawan-menuka-og.jpg",
+      "publicId": "static:pawan-menuka-og-v1"
+    }
+  }
+}
