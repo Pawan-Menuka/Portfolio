@@ -2,9 +2,10 @@ import { useEffect, useMemo } from 'react';
 import { useThree } from '@react-three/fiber';
 
 export function useOceanTime(framesPerSecond = 24) {
-  const time = useMemo(() => ({ value: 0 }), []);
+  const time = useMemo(() => ({ value: 0, active: false, epoch: 0 }), []);
   const { gl, invalidate } = useThree();
   useEffect(() => {
+    const targetFps = framesPerSecond == null ? 24 : framesPerSecond;
     let timer, inView = true, previous = performance.now();
     const update = () => {
       const now = performance.now();
@@ -15,7 +16,13 @@ export function useOceanTime(framesPerSecond = 24) {
     const sync = () => {
       clearInterval(timer);
       previous = performance.now();
-      if (!document.hidden && inView && framesPerSecond > 0) { update(); timer = setInterval(update, 1000 / framesPerSecond); }
+      const active = !document.hidden && inView;
+      // oxlint-disable-next-line react/immutability -- Shared R3F uniform/lifecycle signal updated outside React rendering.
+      if (time.active !== active) {
+        time.active = active;
+        time.epoch += 1;
+      }
+      if (!document.hidden && inView && targetFps > 0) { update(); timer = setInterval(update, 1000 / targetFps); }
     };
     const observer = new IntersectionObserver(entries => { inView = entries[0].isIntersecting; sync(); });
     observer.observe(gl.domElement);

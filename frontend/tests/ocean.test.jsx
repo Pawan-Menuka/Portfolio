@@ -38,12 +38,17 @@ it('pauses atmosphere ticks when hidden or offscreen and releases its timer and 
   const view = renderHook(useOceanTime);
   act(() => vi.advanceTimersByTime(1000));
   expect(view.result.current.value).toBeGreaterThan(.8);
+  expect(view.result.current.active).toBe(true);
+  const initialEpoch = view.result.current.epoch;
   const beforeHidden = view.result.current.value;
   act(() => { visible = false; document.dispatchEvent(new Event('visibilitychange')); vi.advanceTimersByTime(5000); });
   expect(view.result.current.value).toBe(beforeHidden);
+  expect(view.result.current.active).toBe(false);
   act(() => { visible = true; document.dispatchEvent(new Event('visibilitychange')); vi.advanceTimersByTime(100); });
   expect(view.result.current.value - beforeHidden).toBeLessThan(.2);
   act(() => intersection([{ isIntersecting: false }]));
   expect(vi.getTimerCount()).toBe(0);
+  expect(view.result.current.active).toBe(false);
+  expect(view.result.current.epoch).toBeGreaterThan(initialEpoch);
   view.unmount(); expect(disconnect).toHaveBeenCalledOnce();
 });

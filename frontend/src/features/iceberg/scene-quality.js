@@ -27,7 +27,7 @@ export const SCENE_QUALITY = deepFreeze({
     water: 'reduced-optical', atmosphere: 'depth-gated-enhanced',
   },
   [SCENE_TIERS.DESKTOP_FULL]: {
-    tier: SCENE_TIERS.DESKTOP_FULL, canvas: true, dpr: [1, 1.5], ambientFps: null, activeFps: null,
+    tier: SCENE_TIERS.DESKTOP_FULL, canvas: true, dpr: [1, 1.5], ambientFps: 30, activeFps: 60,
     reflections: true, refraction: true, shadows: true, transmissionSamples: 6,
     marineSnowCount: 1100, fishSchoolCount: 2, jellyfishCount: 2, cameraOrbitDegrees: 450,
     water: 'full-optical', atmosphere: 'desktop-full',

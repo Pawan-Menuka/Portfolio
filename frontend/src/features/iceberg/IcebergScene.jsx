@@ -63,14 +63,15 @@ function Model({ onReady, onFailure, time, quality }) {
   return asset ? <primitive object={asset.scene} dispose={null} /> : null;
 }
 
-function FrameReporter({ onFrame, probe, tier }) {
+function FrameReporter({ onFrame, probe, tier, time, ready }) {
   const { invalidate } = useThree();
   const remaining = useRef(probe ? 120 : 0);
-  const elapsedMs = useRef(0);
   useEffect(() => { remaining.current = probe ? 120 : 0; }, [probe, tier]);
-  useFrame((_, delta) => {
-    elapsedMs.current += delta * 1000;
-    onFrame?.(elapsedMs.current);
+  useFrame(() => {
+    const active = ready && time.active;
+    // Performance entries and frame samples must share the navigation clock.
+    onFrame?.(performance.now(), { active, epoch: time.epoch });
+    if (!active) return;
     if (remaining.current > 0) {
       remaining.current -= 1;
       invalidate();
@@ -104,6 +105,6 @@ function SceneContent({ onReady, onFailure, onFrame, quality, tier, enhancedCand
     <OceanEnvironment time={time} quality={quality} />
     <ScrollCamera motion={motion} tier={tier} />
     <IceMarkers motion={motion} tier={tier} />
-    <FrameReporter onFrame={onFrame} tier={tier} probe={sceneReady && enhancedCandidate && tier === 'mobile-light'} />
+    <FrameReporter onFrame={onFrame} tier={tier} time={time} ready={sceneReady} probe={sceneReady && enhancedCandidate && tier === 'mobile-light'} />
   </>;
 }

@@ -26,6 +26,14 @@
   --pm-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
+/* App.css constrains generic page content to 1440px. The redesigned inner
+   pages provide their own content widths, so let their chrome use the viewport. */
+body:has(.pm-page) main {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
 .pm-page {
   position: relative;
   min-height: 100vh;
@@ -109,6 +117,7 @@
   justify-content: space-between;
   gap: 24px;
   height: 76px;
+  width: 100%;
   padding: 0 var(--pm-pad-x);
   border-bottom: 1px solid var(--pm-line-2);
   background: #01050ad9;
