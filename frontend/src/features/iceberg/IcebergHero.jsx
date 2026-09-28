@@ -29,7 +29,7 @@ function PreviewSession({ initialTier, enhancedCandidate, onTierChange }) {
   const [activated, setActivated] = useState(false);
   const [failed, setFailed] = useState(false);
   const [report, setReport] = useState(null);
-  const { tier: adaptiveTier, recordFrame, reportFailure } = usePerformanceTier({ initialTier, enhancedCandidate, active: activated && !failed });
+  const { tier: adaptiveTier, recordFrame, reportFailure } = usePerformanceTier({ initialTier, enhancedCandidate, active: activated && !failed && report !== null });
   const onFailure = useCallback(() => { setFailed(true); reportFailure(); }, [reportFailure]);
   const onReady = useCallback(value => setReport(value), []);
   useEffect(() => {

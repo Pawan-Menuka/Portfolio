@@ -56,16 +56,32 @@ export function nextAdaptiveTier({ tier, action, poorWindows = 0, now, lastChang
   return { tier, poorWindows: 0 };
 }
 
+function resetWindow(sample) {
+  sample.intervals = [];
+  sample.lastFrameAt = null;
+  sample.windowStartedAt = null;
+  sample.longTaskMs = 0;
+  sample.poorWindows = 0;
+}
+
 /** Call recordFrame from the scene's existing render loop; this hook starts no second loop. */
 export function usePerformanceTier({ initialTier, enhancedCandidate = false, active = true } = {}) {
   const [tier, setTier] = useState(initialTier ?? SCENE_TIERS.STATIC);
-  const state = useRef({ intervals: [], lastFrameAt: null, poorWindows: 0, lastChangeAt: -Infinity, longTasks: 0, windowStartedAt: null });
+  const state = useRef({ intervals: [], lastFrameAt: null, poorWindows: 0, lastChangeAt: -Infinity, longTaskMs: 0, windowStartedAt: null, epoch: null });
 
   useEffect(() => {
+    resetWindow(state.current);
     if (!active || tier === SCENE_TIERS.STATIC || tier === SCENE_TIERS.DESKTOP_FULL || typeof PerformanceObserver === 'undefined') return;
     let observer;
     try {
-      observer = new PerformanceObserver(list => { state.current.longTasks += list.getEntries().length; });
+      observer = new PerformanceObserver(list => {
+        const sample = state.current;
+        if (document.hidden || sample.windowStartedAt === null) return;
+        for (const entry of list.getEntries()) {
+          const start = Math.max(entry.startTime, sample.windowStartedAt);
+          sample.longTaskMs += Math.max(0, entry.startTime + entry.duration - start);
+        }
+      });
       observer.observe({ type: 'longtask', buffered: false });
     } catch {
       return;
@@ -73,9 +89,23 @@ export function usePerformanceTier({ initialTier, enhancedCandidate = false, act
     return () => observer.disconnect();
   }, [active, tier]);
 
-  const recordFrame = useCallback((timestamp = globalThis.performance?.now?.() ?? Date.now()) => {
+  useEffect(() => {
+    const reset = () => resetWindow(state.current);
+    document.addEventListener('visibilitychange', reset);
+    return () => document.removeEventListener('visibilitychange', reset);
+  }, []);
+
+  const recordFrame = useCallback((timestamp = globalThis.performance?.now?.() ?? Date.now(), { active: sceneActive = true, epoch = 0 } = {}) => {
     if (!active || (tier !== SCENE_TIERS.MOBILE_LIGHT && tier !== SCENE_TIERS.MOBILE_ENHANCED)) return;
     const sample = state.current;
+    if (!sceneActive || document.hidden) {
+      resetWindow(sample);
+      return;
+    }
+    if (sample.epoch !== epoch) {
+      resetWindow(sample);
+      sample.epoch = epoch;
+    }
     if (sample.lastFrameAt === null) {
       sample.lastFrameAt = timestamp;
       sample.windowStartedAt = timestamp;
@@ -83,15 +113,20 @@ export function usePerformanceTier({ initialTier, enhancedCandidate = false, act
     }
     const interval = timestamp - sample.lastFrameAt;
     sample.lastFrameAt = timestamp;
-    if (interval <= 0 || interval > 1000) return;
+    if (!Number.isFinite(interval) || interval <= 0 || interval > 1000) {
+      resetWindow(sample);
+      sample.lastFrameAt = timestamp;
+      sample.windowStartedAt = timestamp;
+      return;
+    }
     sample.intervals.push(interval);
     if (sample.intervals.length < PERFORMANCE_THRESHOLDS.sampleSize) return;
     const elapsed = Math.max(1, timestamp - sample.windowStartedAt);
-    const longTaskRatio = Math.min(1, (sample.longTasks * 50) / elapsed);
+    const longTaskRatio = Math.min(1, sample.longTaskMs / elapsed);
     const result = evaluatePerformanceWindow({ tier, intervals: sample.intervals, enhancedCandidate, longTaskRatio });
     const transition = nextAdaptiveTier({ tier, action: result.action, poorWindows: sample.poorWindows, now: timestamp, lastChangeAt: sample.lastChangeAt });
     sample.intervals = [];
-    sample.longTasks = 0;
+    sample.longTaskMs = 0;
     sample.windowStartedAt = timestamp;
     sample.poorWindows = transition.poorWindows;
     if (transition.tier !== tier) {
